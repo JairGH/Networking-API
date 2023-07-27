@@ -11,6 +11,7 @@ const thoughtSchema = new Schema({
   createdAt: {
     type: Date,
     default: Date.now,
+    // ? How can I start this?
     // * Use a getter method to format the timestamp on query
   },
   username: {
