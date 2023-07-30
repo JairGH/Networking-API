@@ -1,5 +1,6 @@
 const { Schema, model } = require("mongoose");
 const Schema = mongoose.Schema;
+const reactionSchema = require("./Reaction");
 
 const thoughtSchema = new Schema({
   thoughtText: {
@@ -11,23 +12,21 @@ const thoughtSchema = new Schema({
   createdAt: {
     type: Date,
     default: Date.now,
-    // ? How can I start this?
-    // * Use a getter method to format the timestamp on query
+    get: (time) => new Date(time).toLocaleDateString(),
   },
   username: {
     type: String,
-      required: true,
-    // * or more like type: Schema.types.ObjectId?
+    required: true,
   },
-  //? Need help
-  reactions: {},
+  //* Nested Document
+  reactions: [reactionSchema],
   toJSON: {
     virtuals: true,
+    getters: true,
   },
 });
- //? Is this correct?
 postSchema.virtual("reactionCount").get(function () {
-  return this.reactions.toString();
+  return this.reactions.length;
 });
 
 module.exports = mongoose.model("thought", thoughtSchema);

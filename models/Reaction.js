@@ -17,7 +17,7 @@ const reactionSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now,
-    // * Use a getter method to format the timestamp on query
+    get: (time) => new Date(time).toLocaleDateString(),
   },
 });
 
