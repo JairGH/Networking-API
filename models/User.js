@@ -1,6 +1,4 @@
 const { Schema, model } = require("mongoose");
-const Schema = mongoose.Schema;
-const { stringify } = require("querystring");
 
 const userSchema = new Schema({
   username: {
