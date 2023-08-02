@@ -9,10 +9,9 @@ const {
   deleteThoughtById,
 } = require("../../controllers/thoughtController");
 
-router.route("/").get(getThought);
-router.route("/thought:Id").get(getSingleThought);
-router.route("/").post(createThought);
+router.route("/").get(getThought).post(createThought);;
+router.route("/thoughtId").get(getSingleThought);
 router.route("/").put(updateThoughtById);
-router.route("/thought:Id").delete(deleteThoughtById);
+router.route("/thoughtId").delete(deleteThoughtById);
 
 module.exports = router;
