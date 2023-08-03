@@ -36,6 +36,7 @@ module.exports = {
 
       res.json({
         thought,
+        // ? what is text doing?
         text: await text(req.params.thoughtId),
       });
     } catch (error) {
