@@ -12,7 +12,7 @@ module.exports = {
 
       const userObj = {
         users,
-        allUsers: await userCount(),
+        allUsers:  userCount(),
       };
       res.json(userObj);
     } catch (err) {
