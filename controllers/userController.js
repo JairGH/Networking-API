@@ -12,9 +12,9 @@ module.exports = {
 
       const userObj = {
         users,
-        allUsers:  userCount(),
+        allUsers: userCount(),
       };
-      res.json(userObj);
+      res.json(users);
     } catch (err) {
       res.status(500).json({ error: "An error occurred" });
     }
@@ -23,15 +23,13 @@ module.exports = {
     try {
       const user = await User.findOne({
         _id: req.params.userId,
-      }).select("-__v");
+      });
+
       if (!user) {
-        return res.status(400).json({ message: "No thought with that ID" });
+        return res.status(404).json({ message: "No user with that ID" });
       }
 
-      res.json({
-        user,
-        userName: await userName(req.params.userId),
-      });
+      res.json(user);
     } catch (err) {
       console.log(err);
       res.status(500).json(error);
@@ -75,3 +73,5 @@ module.exports = {
     }
   },
 };
+
+// Todo - Having problems with requestById
