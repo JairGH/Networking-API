@@ -8,7 +8,7 @@ const userCount = async () => {
 module.exports = {
   async getUsers(req, res) {
     try {
-      const users = await User.find();
+      const users = await User.find().populate("friends");
 
       const userObj = {
         users,
@@ -63,13 +63,45 @@ module.exports = {
   async deleteUserById(req, res) {
     try {
       const user = await User.findByIdAndDelete({
-        _id: req.paras.userId,
+        _id: req.params.userId,
       });
       if (!user) {
         res.json(404).json({ message: "No users with that ID" });
       }
     } catch (err) {
       res.json(500).json(err);
+    }
+  },
+  async addFriend(req, res) {
+    try {
+      await User.findByIdAndUpdate(
+        {
+          _id: req.params.userId,
+        },
+        {
+          $addToSet: { friends: req.params.friendId },
+        }
+      );
+      res.json({ message: "Nice" });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+  },
+  async deleteFriend(req, res) {
+    try {
+      await User.findByIdAndUpdate(
+        {
+          _id: req.params.userId,
+        },
+        {
+          $pull: { friends: req.params.friendId },
+        }
+      );
+      res.json({ message: "Bye" });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
     }
   },
 };

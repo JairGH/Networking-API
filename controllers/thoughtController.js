@@ -72,12 +72,28 @@ module.exports = {
   async deleteThoughtById(req, res) {
     try {
       const thought = await Thought.findByIdAndDelete({
-        _id: req.body.thoughtId
+        _id: req.body.thoughtId,
       });
       if (!thought) {
         res.status(404).json({ message: "No thought with that ID" });
       }
     } catch (err) {
+      res.status(500).json(err);
+    }
+  },
+  async addReaction(req, res) {
+    try {
+      await Thought.findByIdAndUpdate(
+        {
+          _id: req.params.thoughtId,
+        },
+        {
+          $push: { reactions: req.body },
+        }
+      );
+      res.json({ message: "It work" });
+    } catch (err) {
+      console.log(err);
       res.status(500).json(err);
     }
   },
