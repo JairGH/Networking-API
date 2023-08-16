@@ -105,5 +105,3 @@ module.exports = {
     }
   },
 };
-
-// Todo - Having problems with requestById
